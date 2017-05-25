@@ -1,0 +1,17 @@
+<project name="chess.jar" default="deploy" >
+	<property file="build.properties" />
+	<target name="build">
+		<javac srcdir="src" destdir="bin" />
+	</target>
+	<target name="jar" depends="build">
+		<jar basedir="bin" destfile="chess.jar" />
+	</target>
+	<target name="deploy" depends="jar">
+		<copy file="chess.jar" todir="${todir}" />
+	</target>
+	<target name="server_deploy" depends="jar">
+		<ftp password="${ftp.password}" server="${ftp.server}" userid="${ftp.login}" remotedir="lib" verbose="yes">
+			<fileset file="chess.jar" />
+		</ftp>
+	</target>
+</project>
